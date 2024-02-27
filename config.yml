@@ -1,0 +1,37 @@
+seed_everything: 42
+trainer:
+  num_sanity_val_steps: 1
+  log_every_n_steps: 1
+  accelerator: "gpu"
+  deterministic: yes
+  fast_dev_run: no
+  max_epochs: 10
+  callbacks:
+    class_path: lightning.pytorch.callbacks.ModelCheckpoint
+    init_args:
+      dirpath: ./
+      filename: '{epoch}-{Loss/val:.0f}-{Loss/train:.0f}'
+      monitor: Loss/val
+      verbose: yes
+      save_last: yes
+      save_top_k: 1
+      save_weights_only: no
+      auto_insert_metric_name: no
+      mode: min
+
+
+data:
+   class_path: guildai_x_pytorch_lightning.data.DataModule
+   init_args:
+     cifar10_root: "/tmp"
+     train_batch_size: 8
+     test_batch_size: 16
+
+model:
+  class_path: guildai_x_pytorch_lightning.model.LightningModel
+  init_args:
+    loss: torch.nn.CrossEntropyLoss
+    lr: 1e-4
+    weight_decay: 1e-8
+    model:
+      class_path: guildai_x_pytorch_lightning.models.simple.Net

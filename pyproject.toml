@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "guildai-x-pytorch-lightning"
+version = "1.0.0"
+description = "Example for integrating guild.ai with PyTorch Lightning"
+authors = ["Alessandro Wollek <alessandro@wollek.dev>"]
+readme = "README.md"
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = ">=3.11.6,<3.12"
+guildai = "^0.9.0"
+torchvision = "^0.16.0"
+torch = [
+  {version = "2.1.1", source = "pytorch", markers = "sys_platform == 'linux'"},
+  {version = "2.1.1", source = "PyPI", markers = "sys_platform == 'darwin'"}
+]
+lightning = {extras = ["pytorch-extra"], version = "^2.1.1"}
+
+[[tool.poetry.source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu121"
+priority = "explicit"
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,20 @@
+- model: cifar10
+  operations:
+    train:
+      exec: python guildai_x_pytorch_lightning/trainer.py fit --config config.yml
+      sourcecode:
+        - "guildai_x_pytorch_lightning/*.py"
+      flags-dest: config:config.yml
+      flags-import: all
+      flags:
+        trainer.accelerator: cpu
+        trainer.max_steps: 10
+    test:
+      exec: python guildai_x_pytorch_lightning/trainer.py fit --config config.yml
+      sourcecode:
+        - "guildai_x_pytorch_lightning/*.py"
+      flags-dest: config:config.yml
+      flags-import: all
+      flags:
+        trainer.accelerator: cpu
+        trainer.fast_dev_run: yes
